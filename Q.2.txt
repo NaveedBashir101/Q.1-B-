@@ -1,0 +1,117 @@
+#include <iostream>
+
+using namespace std;
+
+class Product
+{
+public:
+    string prodId;
+    string prodName;
+    double cost;
+
+    Product(string id, string name, double c) : prodId(id), prodName(name), cost(c) 
+{
+
+}
+
+    void displayDetails() 
+{
+        cout << "Product ID: " << prodId << ", Name: " << prodName << ", Cost: $" << cost << endl;
+}
+};
+
+class ShoppingCart 
+{
+private:
+    static const int MAX_PRODUCTS = 10;
+    Product* cartProducts[MAX_PRODUCTS];
+    int productCount;
+
+public:
+    ShoppingCart() : productCount(0) 
+{
+
+}
+
+    void addProduct(Product* product) 
+{
+        if (productCount < MAX_PRODUCTS) 
+{
+            cartProducts[productCount++] = product;
+        } 
+else 
+{
+            cout << "Shopping Cart is full. Cannot add more products." << endl;
+        }
+    }
+
+    void displayProducts() 
+{
+        cout << "Products in Cart:" << endl;
+        for (int i = 0; i < productCount; ++i) 
+{
+            cartProducts[i]->displayDetails();
+        }
+    }
+
+    double calculateTotalCost() 
+{
+        double totalCost = 0.0;
+        for (int i = 0; i < productCount; ++i) 
+{
+            totalCost += cartProducts[i]->cost;
+        }
+        return totalCost;
+    }
+};
+
+class User
+ {
+public:
+    string userId;
+    string userName;
+    ShoppingCart* userCart;
+
+    User(string id, string name) : userId(id), userName(name), userCart(nullptr)
+{
+
+}
+    void displayDetails() 
+{
+        cout << "User ID: " << userId << ", Name: " << userName << endl;
+}
+
+    void setShoppingCart(ShoppingCart* cart)
+ {
+        userCart = cart;
+ }
+};
+
+int main() 
+{
+    Product* item1 = new Product("01", "Oats", 20.0);
+    Product* item2 = new Product("02", "Register", 5.0);
+
+    ShoppingCart* cart = new ShoppingCart();
+
+    cart->addProduct(item1);
+    cart->addProduct(item2);
+
+    User* customer = new User("007", "Naveed");
+
+    customer->setShoppingCart(cart);
+
+    customer->displayDetails();
+
+    cart->displayProducts();
+
+    double totalExpenses = cart->calculateTotalCost();
+    cout << "Total Cost: $" << totalExpenses << endl;
+
+    delete item1;
+    delete item2;
+    delete cart;
+    delete customer;
+
+    return 0;
+}
