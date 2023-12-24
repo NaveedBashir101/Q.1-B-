@@ -1,0 +1,39 @@
+#include <iostream>
+
+using namespace std;
+
+class ElectronicDevice {
+public:
+    virtual void powerMode() const = 0;
+    virtual ~ElectronicDevice() = default;
+};
+
+class Laptop : public ElectronicDevice 
+{
+public:
+    void powerMode() const override
+    {
+        cout << "Laptop is in sleep mode." << endl;
+    }
+};
+
+class Smartphone : public ElectronicDevice 
+{
+public:
+    void powerMode() const override 
+    {
+        cout << "Smartphone is in silent mode." << endl;
+    }
+};
+
+int main() {
+    Laptop myLaptop;
+    cout << "Using the laptop: ";
+    myLaptop.powerMode();
+
+    Smartphone mySmartphone;
+    cout << "Using the smartphone: ";
+    mySmartphone.powerMode();
+
+    return 0;
+}
